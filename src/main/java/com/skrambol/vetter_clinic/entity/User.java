@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * User
@@ -36,12 +37,15 @@ public class User extends BaseEntityAudit {
 	private String phoneNumber;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@ToString.Exclude
 	private Role role;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@ToString.Exclude
 	private Owner owner;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@ToString.Exclude
 	private Veterinarian veterinarian;
 
 	public User() {
