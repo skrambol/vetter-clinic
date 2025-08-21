@@ -1,7 +1,9 @@
 package com.skrambol.vetter_clinic.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -29,6 +31,18 @@ public class User extends BaseEntityAudit {
 
 	@Column(name = "address")
 	private String address;
+
+	@Column(name = "phone_number")
+	private String phoneNumber;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Role role;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Owner owner;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Veterinarian veterinarian;
 
 	public User() {
 	}
