@@ -1,5 +1,6 @@
 package com.skrambol.vetter_clinic.service;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.skrambol.vetter_clinic.entity.Owner;
@@ -26,7 +27,12 @@ public class AuthServiceImpl implements AuthService {
 		user.setActive(true);
 		owner.setId(0);
 		owner.setUser(user);
-		return ownerRepository.save(owner);
+		try {
+			return ownerRepository.save(owner);
+		} catch (DataIntegrityViolationException e) {
+			// TODO: handle custom error
+			throw new RuntimeException("username already exists");
+		}
 	}
 
 	@Override
@@ -35,7 +41,12 @@ public class AuthServiceImpl implements AuthService {
 		user.setActive(true);
 		veterinarian.setId(0);
 		veterinarian.setUser(user);
-		return veterinarianRepository.save(veterinarian);
+		try {
+			return veterinarianRepository.save(veterinarian);
+		} catch (DataIntegrityViolationException e) {
+			// TODO: handle custom error
+			throw new RuntimeException("username already exists");
+		}
 	}
 
 }
