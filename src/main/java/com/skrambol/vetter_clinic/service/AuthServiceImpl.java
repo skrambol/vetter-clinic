@@ -1,6 +1,8 @@
 package com.skrambol.vetter_clinic.service;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.skrambol.vetter_clinic.entity.Owner;
@@ -20,11 +22,13 @@ public class AuthServiceImpl implements AuthService {
 
 	private final OwnerRepository ownerRepository;
 	private final VeterinarianRepository veterinarianRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public Owner register(User user, Owner owner) {
 		user.setId(0);
 		user.setActive(true);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		owner.setId(0);
 		owner.setUser(user);
 		try {
