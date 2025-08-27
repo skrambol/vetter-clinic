@@ -2,6 +2,9 @@ package com.skrambol.vetter_clinic.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +36,20 @@ public class AuthRestController {
 
 		authService.register(user, owner);
 
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("")
+	public ResponseEntity<?> testAuthenticatedUser(Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+		System.out.println(userDetails.getAuthorities());
+
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@GetMapping("/role")
+	public ResponseEntity<?> testAuthenticatedUserRole() {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 }

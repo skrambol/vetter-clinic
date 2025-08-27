@@ -1,8 +1,12 @@
 package com.skrambol.vetter_clinic.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -36,9 +40,9 @@ public class User extends BaseEntityAudit {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@ToString.Exclude
-	private Role role;
+	private List<Role> roles;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	@ToString.Exclude
@@ -49,5 +53,11 @@ public class User extends BaseEntityAudit {
 	private Veterinarian veterinarian;
 
 	public User() {
+		roles = new ArrayList<Role>();
+	}
+
+	public void addRole(Role role) {
+		roles.add(role);
+		role.setUser(this);
 	}
 }

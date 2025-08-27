@@ -1,13 +1,15 @@
 package com.skrambol.vetter_clinic.service;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.skrambol.vetter_clinic.entity.Owner;
+import com.skrambol.vetter_clinic.entity.Role;
 import com.skrambol.vetter_clinic.entity.User;
 import com.skrambol.vetter_clinic.entity.Veterinarian;
+import com.skrambol.vetter_clinic.entity.Role.RoleEnum;
 import com.skrambol.vetter_clinic.repository.OwnerRepository;
 import com.skrambol.vetter_clinic.repository.VeterinarianRepository;
 
@@ -25,12 +27,16 @@ public class AuthServiceImpl implements AuthService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
+	@Transactional
 	public Owner register(User user, Owner owner) {
 		user.setId(0);
 		user.setActive(true);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
 		owner.setId(0);
 		owner.setUser(user);
+
+		user.addRole(new Role(RoleEnum.OWNER));
 		try {
 			return ownerRepository.save(owner);
 		} catch (DataIntegrityViolationException e) {
@@ -40,11 +46,15 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
+	@Transactional
 	public Veterinarian register(User user, Veterinarian veterinarian) {
 		user.setId(0);
 		user.setActive(true);
+
 		veterinarian.setId(0);
 		veterinarian.setUser(user);
+
+		user.addRole(new Role(RoleEnum.OWNER));
 		try {
 			return veterinarianRepository.save(veterinarian);
 		} catch (DataIntegrityViolationException e) {
