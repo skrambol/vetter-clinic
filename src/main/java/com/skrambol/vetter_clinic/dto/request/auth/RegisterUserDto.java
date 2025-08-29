@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * RegisterOwnerDto
+ * RegisterUserDto
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterUserDto {
+public abstract class RegisterUserDto {
 	private String username;
 	private String password;
 	private String firstName;

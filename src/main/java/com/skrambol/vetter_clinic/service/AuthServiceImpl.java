@@ -50,11 +50,12 @@ public class AuthServiceImpl implements AuthService {
 	public Veterinarian register(User user, Veterinarian veterinarian) {
 		user.setId(0);
 		user.setActive(true);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		veterinarian.setId(0);
 		veterinarian.setUser(user);
 
-		user.addRole(new Role(RoleEnum.OWNER));
+		user.addRole(new Role(RoleEnum.VETERINARIAN));
 		try {
 			return veterinarianRepository.save(veterinarian);
 		} catch (DataIntegrityViolationException e) {

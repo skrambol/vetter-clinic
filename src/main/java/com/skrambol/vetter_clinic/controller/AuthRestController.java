@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skrambol.vetter_clinic.dto.request.auth.RegisterOwnerDto;
 import com.skrambol.vetter_clinic.dto.request.auth.RegisterUserDto;
+import com.skrambol.vetter_clinic.dto.request.auth.RegisterVeterinarianDto;
 import com.skrambol.vetter_clinic.entity.Owner;
 import com.skrambol.vetter_clinic.entity.User;
+import com.skrambol.vetter_clinic.entity.Veterinarian;
 import com.skrambol.vetter_clinic.mapper.UserMapper;
 import com.skrambol.vetter_clinic.service.AuthService;
 
@@ -30,11 +33,24 @@ public class AuthRestController {
 	private final AuthService authService;
 
 	@PostMapping("/register/owner")
-	public ResponseEntity<?> register(@RequestBody RegisterUserDto userDto) {
+	public ResponseEntity<?> register(@RequestBody RegisterOwnerDto ownerDto) {
 		Owner owner = new Owner();
-		User user = userMapper.toUser(userDto);
+		User user = userMapper.toUser(ownerDto);
 
 		authService.register(user, owner);
+
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+
+	@PostMapping("/register/veterinarian")
+	public ResponseEntity<?> register(@RequestBody RegisterVeterinarianDto veterinarianDto) {
+		Veterinarian veterinarian = new Veterinarian();
+		User user = userMapper.toUser(veterinarianDto);
+
+		veterinarian.setEducation(veterinarianDto.getEducation());
+		veterinarian.setYearsInPractice(veterinarianDto.getYearsInPractice());
+
+		authService.register(user, veterinarian);
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

@@ -1,0 +1,28 @@
+meta {
+  name: register veterinarian
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/auth/register/veterinarian
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "veterinarian",
+    "password": "veterinarian",
+    "firstName": "Doctor",
+    "lastName": "Quack",
+    "address": "my address",
+    "phoneNumber": "1238479",
+    "education": "UPLB",
+    "yearsInPractice": 5
+  }
+}
+
+settings {
+  encodeUrl: true
+}
