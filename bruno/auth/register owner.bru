@@ -1,0 +1,26 @@
+meta {
+  name: register owner
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/api/auth/register/owner
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "owner",
+    "password": "ownerowner",
+    "firstName": "first name",
+    "lastName": "last name",
+    "address": "my address",
+    "phoneNumber": "1238479"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
