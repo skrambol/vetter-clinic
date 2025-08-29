@@ -54,18 +54,4 @@ public class AuthRestController {
 
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-
-	@GetMapping("")
-	public ResponseEntity<?> testAuthenticatedUser(Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-		System.out.println(userDetails.getAuthorities());
-
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
-
-	@GetMapping("/role")
-	public ResponseEntity<?> testAuthenticatedUserRole() {
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
 }
