@@ -1,9 +1,13 @@
 package com.skrambol.vetter_clinic.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -25,6 +29,10 @@ public class Veterinarian extends BaseEntityAudit {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
+	@ManyToMany(mappedBy = "affiliatedVeterinarians")
+	private List<Clinic> clinics;
+
 	public Veterinarian() {
+		clinics = new ArrayList<Clinic>();
 	}
 }
