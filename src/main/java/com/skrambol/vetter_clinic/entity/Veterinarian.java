@@ -1,7 +1,7 @@
 package com.skrambol.vetter_clinic.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -30,9 +30,12 @@ public class Veterinarian extends BaseEntityAudit {
 	private User user;
 
 	@ManyToMany(mappedBy = "affiliatedVeterinarians")
-	private List<Clinic> clinics;
+	private Set<Clinic> clinics;
+
+	@OneToOne(mappedBy = "headVeterinarian")
+	private Clinic headClinic;
 
 	public Veterinarian() {
-		clinics = new ArrayList<Clinic>();
+		clinics = new HashSet<Clinic>();
 	}
 }
